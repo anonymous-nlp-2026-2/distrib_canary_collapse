@@ -1,0 +1,16 @@
+\section*{Limitations}
+\label{sec:limitations}
+
+\paragraph{Scope and generalizability.}
+Our landscape characterization uses Pythia-410M as the primary architecture; the phase diagram is Pythia-family-only, frontier-scale behavior (${>}$7B) is untested, and cross-architecture evaluation is limited to $\alpha{=}1.0$.
+All experiments use full replacement with a single decoding strategy (temperature~$1.0$, top-$k{=}50$); data accumulation~\citep{dey2024breaking} or lower temperatures would shift the landscape.
+More fundamentally, the blind zone below $\alpha_c$ means that substantial quality degradation (e.g., ${\sim}40\%$ distinct-1 decline at $\alpha{=}0.25$) occurs before any statistical method signals detection.
+The framework is therefore better characterized as a confirmation tool for ongoing collapse than an early-warning system.
+
+\paragraph{Statistical power.}
+PermG's empirical FPR is 6.7\% (CI $[1.8\%, 16.2\%]$) and $K{\geq}3$ consensus yields 10.0\% (6/60); per-condition detection rates carry wide binomial CIs (e.g., $[0.25, 0.92]$ for 6/8), so the phase diagram represents a coarse topology rather than precise probability estimates.
+The 3-seed phase diagram limits variance estimation (2 degrees of freedom); the detection boundary CI should be interpreted with this constraint.
+MMCT provides marginal improvement over standalone PermG in the current experimental setting; its primary value is as an analytical framework for comparing methods rather than a deployment-ready ensemble.
+
+\paragraph{Causal interpretation.}
+Permutation Granger testing establishes temporal precedence, not causation; our short-sequence regime ($T{\leq}25$) limits statistical power relative to econometric standards ($T{\geq}100$), and nonlinear alternatives to the linear PermG test yield no significant results in our setting (see \S\ref{sec:discussion}).

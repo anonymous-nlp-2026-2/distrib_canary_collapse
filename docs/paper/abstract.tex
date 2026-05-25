@@ -1,0 +1,7 @@
+\begin{abstract}
+When language models train iteratively on their own output, the resulting distributional collapse is difficult to detect: the time series are short, the signal grows sub-linearly with contamination, and---as we demonstrate---the choice of statistical method alone can shift conclusions from universal detection to complete null.
+We identify a sharp detection phase transition in iterative model collapse: Granger-based testing finds zero significant canary$\to$downstream pairs through 45\% synthetic contamination, then jumps to reliable detection within a two-percentage-point interval at $\alpha_c \approx 0.50$, defining three confirmed regimes (blind, onset, detection).
+This transition emerges from a five-method comparison where null-control false-positive rates span 7\% to 94\%; permutation Granger causality, the lowest-FPR method (6.7\%, CI $[1.8\%, 16.2\%]$), serves as the primary detector.
+Cross-architecture evaluation at full synthetic replacement ($\alpha{=}1.0$) across five model families (345M--6.9B) supports forward detection in 11/15 conditions.
+Token entropy temporally precedes diversity collapse by at least one generation, enabling a proof-of-concept intervention that reduces peak perplexity by 64\%.
+\end{abstract}
