@@ -1,6 +1,6 @@
 """Generate regime map and consensus heatmap figures."""
 # Data source: cross_alpha_v6.json, last updated 2026-05-15
-# Remote path: ./results/analysis/cross_alpha_v6.json
+# Remote path: /root/autodl-tmp/distrib_canary_collapse/results/analysis/cross_alpha_v6.json
 import json
 import os
 import warnings
@@ -29,10 +29,10 @@ plt.rcParams.update({
     'axes.spines.right': False,
 })
 
-OUT = './artifacts/figures'
+OUT = '/home/ubuntu/.agent-ml-research-idea_gen_0514_4/projects/distrib_canary_collapse/artifacts/figures'
 
 JSON_PATHS = [
-    './results/analysis/cross_alpha_v6.json',
+    '/root/autodl-tmp/distrib_canary_collapse/results/analysis/cross_alpha_v6.json',
     os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                  'results', 'analysis', 'cross_alpha_v6.json'),
 ]

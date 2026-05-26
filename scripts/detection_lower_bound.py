@@ -26,7 +26,7 @@ warnings.filterwarnings("ignore")
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
-BASE_DIR = Path(".")
+BASE_DIR = Path("/root/autodl-tmp/distrib_canary_collapse")
 RESULTS_DIR = BASE_DIR / "results"
 OUT_DIR = BASE_DIR / "artifacts" / "detection_bound"
 OUT_DIR.mkdir(parents=True, exist_ok=True)

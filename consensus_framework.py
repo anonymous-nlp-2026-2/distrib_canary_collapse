@@ -533,7 +533,7 @@ def compute_fpr_fnr_loo(sig_matrix, pair_names, method_names, seed_threshold=3):
 
 def main():
     """Run all three sub-tasks and save results."""
-    base = "."
+    base = "/root/autodl-tmp/distrib_canary_collapse"
     ablation_path = os.path.join(base, "results/mvp/analysis/method_ablation.json")
     out_dir = os.path.join(base, "results/mvp/analysis/consensus")
     os.makedirs(out_dir, exist_ok=True)

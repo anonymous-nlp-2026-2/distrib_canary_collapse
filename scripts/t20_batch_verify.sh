@@ -2,7 +2,7 @@
 # T=20 batch verify: run 5-method analysis + prediction check for all completed experiments
 set -euo pipefail
 
-PROJ="$PROJECT_ROOT"
+PROJ="/root/autodl-tmp/distrib_canary_collapse"
 PRED="$PROJ/artifacts/t20_predictions_locked.json"
 RESULTS_DIR="$PROJ/results/t20"
 OUT_DIR="$PROJ/artifacts"

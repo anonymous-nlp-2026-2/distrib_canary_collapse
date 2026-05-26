@@ -3,7 +3,7 @@ import json
 import os
 import glob
 
-BASE = "./results/alpha_sweep"
+BASE = "/root/autodl-tmp/distrib_canary_collapse/results/alpha_sweep"
 
 files = sorted(glob.glob(os.path.join(BASE, "a*_s*/analysis/5method_leadlag.json")))
 

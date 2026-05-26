@@ -12,7 +12,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
-BASE = Path(".")
+BASE = Path("/root/autodl-tmp/distrib_canary_collapse")
 RESULTS = BASE / "results" / "alpha_sweep"
 OUT_JSON = BASE / "results" / "w11_partial_correlation_results.json"
 OUT_FIG_DIR = BASE / "results" / "w11_figures"

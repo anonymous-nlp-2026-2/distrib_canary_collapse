@@ -384,7 +384,7 @@ def analyze_experiment(exp_dir, alpha, seed, T, output_path):
             "mauve": None,
         }
 
-    rel_dir = exp_dir.replace("./", "")
+    rel_dir = exp_dir.replace("/root/autodl-tmp/distrib_canary_collapse/", "")
 
     result = {
         "meta": {

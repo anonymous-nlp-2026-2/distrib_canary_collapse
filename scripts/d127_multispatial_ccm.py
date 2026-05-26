@@ -15,8 +15,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-RESULTS_DIR = "./results/alpha_sweep"
-OUTPUT_DIR = "./artifacts/d127_ccm"
+RESULTS_DIR = "/root/autodl-tmp/distrib_canary_collapse/results/alpha_sweep"
+OUTPUT_DIR = "/root/autodl-tmp/distrib_canary_collapse/artifacts/d127_ccm"
 
 EXPERIMENTS = {
     "alpha_1.0": "a100_s42_fp32",

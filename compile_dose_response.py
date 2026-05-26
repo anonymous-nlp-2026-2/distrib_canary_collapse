@@ -18,7 +18,7 @@ from pathlib import Path
 
 SERVER = sys.argv[1] if len(sys.argv) > 1 else "unknown"
 OUT_CSV = sys.argv[2] if len(sys.argv) > 2 else "/tmp/dose_response_partial.csv"
-RESULTS_DIR = Path("./results")
+RESULTS_DIR = Path("/root/autodl-tmp/distrib_canary_collapse/results")
 
 FIELDS = [
     "category", "experiment", "alpha", "seed", "T", "domain", "precision", "model",

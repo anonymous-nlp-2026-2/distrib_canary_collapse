@@ -114,7 +114,7 @@ ax_c.annotate('trough', xy=(a_tr, v_tr),
               ha='center',
               arrowprops=dict(arrowstyle='->', color='#555555', lw=0.8))
 
-out = './docs/paper/figures'
+out = '/home/ubuntu/.agent-ml-research-idea_gen_0514_4/projects/distrib_canary_collapse/docs/paper/figures'
 fig.savefig(f'{out}/fig_sr_framework.pdf', format='pdf')
 fig.savefig(f'{out}/fig_sr_framework.png', format='png', dpi=300)
 plt.close()

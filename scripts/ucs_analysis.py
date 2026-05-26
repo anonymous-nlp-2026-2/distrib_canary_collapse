@@ -31,7 +31,7 @@ import numpy as np
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-HF_CACHE = os.environ.get("HF_HOME", "~/.cache/huggingface")
+HF_CACHE = os.environ.get("HF_HOME", "/root/autodl-tmp/.hf_cache")
 os.environ["HF_HOME"] = HF_CACHE
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -469,7 +469,7 @@ def generate_comparison_report(pythia_analysis, olmo_analysis, output_dir):
 def main():
     parser = argparse.ArgumentParser(description="Universal Cascade Signature Analysis")
     parser.add_argument("--domain", choices=["pythia", "olmo", "both"], default="both")
-    parser.add_argument("--output_dir", default="./artifacts/universal_cascade")
+    parser.add_argument("--output_dir", default="/root/autodl-tmp/distrib_canary_collapse/artifacts/universal_cascade")
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)

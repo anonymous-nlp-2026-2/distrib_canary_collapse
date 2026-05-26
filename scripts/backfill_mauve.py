@@ -9,7 +9,7 @@ Usage:
 """
 
 import os
-os.environ["HF_HOME"] = "~/.cache/huggingface"
+os.environ["HF_HOME"] = "/root/autodl-tmp/.hf_cache"
 os.environ["HF_HUB_OFFLINE"] = "1"
 
 import argparse

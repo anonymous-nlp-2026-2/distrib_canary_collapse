@@ -37,11 +37,11 @@ methods = ['Naive XCorr', 'Diff. XCorr', r'Threshold ($3\sigma$)',
            'Perm. Granger', 'Toda–Yamamoto']
 
 data = {
-    'Naive XCorr':            [75,   62.5, 62.5, 0,    0],
-    'Diff. XCorr':            [0,    25,   12.5, 0,    0],
-    r'Threshold ($3\sigma$)': [37.5, 62.5, 100,  100,  25],
-    'Perm. Granger':          [0,    0,    75,   75,   75],
-    'Toda–Yamamoto':          [12.5, 37.5, 50,   100,  12.5],
+    'Naive XCorr':            [25.0, 12.5, 37.5, 87.5, 87.5],
+    'Diff. XCorr':            [50.0, 12.5, 75.0, 75.0, 75.0],
+    r'Threshold ($3\sigma$)': [37.5, 0.0,  50.0, 0.0,  25.0],
+    'Perm. Granger':          [0.0,  0.0,  75.0, 75.0, 75.0],
+    'Toda–Yamamoto':          [25.0, 12.5, 37.5, 25.0, 37.5],
 }
 
 # ── Colors (softened Okabe-Ito) ──

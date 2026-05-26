@@ -91,11 +91,12 @@ ax.set_axisbelow(True)
 # 75% reference
 ax.axvline(x=75, color='#4A90C4', linewidth=0.5, linestyle=':', alpha=0.4)
 
-leg = ax.legend(loc='lower right', frameon=True, framealpha=0.9,
+leg = ax.legend(loc='lower center', bbox_to_anchor=(0.5, 1.02),
+                ncol=2, frameon=True, framealpha=0.9,
                 edgecolor='#cccccc', borderpad=0.3)
 leg.get_frame().set_linewidth(0.4)
 
-plt.tight_layout()
+fig.subplots_adjust(top=0.92)
 plt.savefig('docs/paper/figures/fig_cross_arch_heatmap.pdf')
 plt.savefig('docs/paper/figures/fig_cross_arch_heatmap.png')
 print('Saved fig_cross_arch_heatmap.pdf + .png')

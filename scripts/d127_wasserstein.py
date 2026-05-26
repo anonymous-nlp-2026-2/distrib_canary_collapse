@@ -12,10 +12,10 @@ import numpy as np
 from collections import Counter
 from pathlib import Path
 
-sys.path.insert(0, ".")
+sys.path.insert(0, "/root/autodl-tmp/distrib_canary_collapse")
 from permutation_granger import permutation_granger_test
 
-BASE = "."
+BASE = "/root/autodl-tmp/distrib_canary_collapse"
 N_PERM = 5000
 
 EXPERIMENTS = {

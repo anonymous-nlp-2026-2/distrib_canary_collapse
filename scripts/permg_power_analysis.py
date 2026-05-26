@@ -312,7 +312,7 @@ def main():
         "elapsed_seconds": round(elapsed_total, 1),
     }
 
-    out_path = "./artifacts/permg_power_analysis.json"
+    out_path = "/root/autodl-tmp/distrib_canary_collapse/artifacts/permg_power_analysis.json"
     with open(out_path, "w") as f:
         json.dump(results, f, indent=2)
     print(f"\nResults saved to {out_path}")
@@ -387,7 +387,7 @@ def main():
         ax2.grid(True, alpha=0.3)
 
         fig.tight_layout()
-        fig_path = "./artifacts/permg_power_curve.png"
+        fig_path = "/root/autodl-tmp/distrib_canary_collapse/artifacts/permg_power_curve.png"
         fig.savefig(fig_path, dpi=150, bbox_inches="tight")
         print(f"Figure saved to {fig_path}")
         plt.close(fig)

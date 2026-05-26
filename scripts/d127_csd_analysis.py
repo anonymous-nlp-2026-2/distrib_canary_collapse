@@ -19,7 +19,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import stats
 
-BASE = Path(".")
+BASE = Path("/root/autodl-tmp/distrib_canary_collapse")
 RESULTS = BASE / "results" / "alpha_sweep"
 OUT_DIR = BASE / "artifacts" / "d127_csd"
 OUT_DIR.mkdir(parents=True, exist_ok=True)

@@ -16,8 +16,8 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from collections import defaultdict, OrderedDict
 
-RESULTS_BASE = "./results"
-OUTPUT_DIR = "./artifacts/d127_spec_curve"
+RESULTS_BASE = "/root/autodl-tmp/distrib_canary_collapse/results"
+OUTPUT_DIR = "/root/autodl-tmp/distrib_canary_collapse/artifacts/d127_spec_curve"
 
 METHODS = ['naive_xcorr', 'diff_xcorr', 'threshold_onset', 'perm_granger', 'ty_granger']
 METHOD_LABELS = {

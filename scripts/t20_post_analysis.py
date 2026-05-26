@@ -7,7 +7,7 @@ import os
 import subprocess
 import sys
 
-PROJECT_ROOT = "."
+PROJECT_ROOT = "/root/autodl-tmp/distrib_canary_collapse"
 ANALYSIS_SCRIPT = os.path.join(PROJECT_ROOT, "run_5method_analysis_d102.py")
 N_PAIRS = 8
 

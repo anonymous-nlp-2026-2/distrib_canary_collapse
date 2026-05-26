@@ -10,7 +10,7 @@ import numpy as np
 from collections import Counter
 from pathlib import Path
 
-sys.path.insert(0, ".")
+sys.path.insert(0, "/root/autodl-tmp/distrib_canary_collapse")
 from permutation_granger import permutation_granger_test
 
 N_PERM = 5000
@@ -111,7 +111,7 @@ def bh_fdr(pvals, q=FDR_Q):
 
 
 def run_analysis():
-    base = "."
+    base = "/root/autodl-tmp/distrib_canary_collapse"
     all_results = {}
 
     for alpha_label, rel_path in EXPERIMENTS.items():

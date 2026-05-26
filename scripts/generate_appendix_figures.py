@@ -12,20 +12,20 @@ import json
 import csv
 from pathlib import Path
 
-ROOT = Path('.')
+ROOT = Path('/home/ubuntu/.agent-ml-research-idea_gen_0514_4/projects/distrib_canary_collapse')
 DATA = ROOT / 'artifacts' / '_project' / 'data'
 OUT = ROOT / 'docs' / 'paper' / 'figures'
 
 # ── Unified palette ──
 PAL = {
-    'blue':     '#2166AC',
-    'red':      '#B2182B',
-    'green':    '#1B7837',
-    'orange':   '#E08214',
-    'purple':   '#6A3D9A',
-    'ltblue':   '#A6CEE3',
-    'grey':     '#666666',
-    'ltgrey':   '#CCCCCC',
+    'blue':     '#4A90C4',
+    'red':      '#CC5A5A',
+    'green':    '#4DAF7C',
+    'orange':   '#E8A04C',
+    'purple':   '#8B6BB0',
+    'ltblue':   '#B8D4E8',
+    'grey':     '#999999',
+    'ltgrey':   '#DDDDDD',
 }
 METHOD_COLORS = {
     'NaiveXCorr': PAL['red'],

@@ -45,22 +45,22 @@ bar_width = 0.35
 fig, ax = plt.subplots(figsize=(4.0, 2.5))
 
 bars1 = ax.bar(x - bar_width/2, obs_vals, bar_width,
-               color='#2166AC', alpha=0.85, label='Observed FPR',
+               color='#4A90C4', alpha=0.85, label='Observed FPR',
                edgecolor='white', linewidth=0.3)
 bars2 = ax.bar(x + bar_width/2, hyp_vals, bar_width,
-               color='#E08214', alpha=0.75, label='Hypothetical (10%)',
+               color='#E8A04C', alpha=0.75, label='Hypothetical (10%)',
                edgecolor='white', linewidth=0.3)
 
 # Value labels
 for i, (ov, hv) in enumerate(zip(obs_vals, hyp_vals)):
     ax.text(i - bar_width/2, ov + 1, f'{ov:.1f}', ha='center', va='bottom',
-            fontsize=5.5, color='#2166AC', fontweight='bold')
+            fontsize=5.5, color='#4A90C4', fontweight='bold')
     ax.text(i + bar_width/2, hv + 1, f'{hv:.1f}', ha='center', va='bottom',
-            fontsize=5.5, color='#E08214')
+            fontsize=5.5, color='#E8A04C')
 
 # 5% nominal line
-ax.axhline(y=5, color='#B03A2E', linewidth=0.6, linestyle='--', alpha=0.5)
-ax.text(-0.5, 6, '5% nominal', fontsize=5.5, color='#B03A2E', alpha=0.7)
+ax.axhline(y=5, color='#CC5A5A', linewidth=0.6, linestyle='--', alpha=0.5)
+ax.text(-0.5, 6, '5% nominal', fontsize=5.5, color='#CC5A5A', alpha=0.7)
 
 ax.set_xticks(x)
 ax.set_xticklabels(methods)

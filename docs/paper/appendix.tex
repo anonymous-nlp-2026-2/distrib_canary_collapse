@@ -15,7 +15,7 @@ Table~\ref{tab:arch_hyperparams} reports training hyperparameters for each archi
 All models use the same generation parameters (temperature~$1.0$, top-$k{=}50$, max length 512) to control for decoding-strategy confounds.
 Batch sizes are adjusted for GPU memory constraints; learning rates follow the respective model families' recommended fine-tuning ranges.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Per-architecture training hyperparameters.}
@@ -53,7 +53,7 @@ Table~\ref{tab:drift_summary} reports the relative change in each metric from ge
 Two patterns emerge: (1)~entropy and calibration (ECE) degrade monotonically with $\alpha$, while (2)~diversity metrics exhibit a non-monotonic relationship where the largest relative decline occurs at moderate contamination ($\alpha{=}0.25$) rather than full replacement ($\alpha{=}1.0$).
 Figure~\ref{fig:metric_trajectory} (main text) visualizes representative per-generation trajectories, showing the distinct temporal profiles that underlie the Granger-precedence analysis in \S\ref{sec:method}.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Metric drift (\%, generation~0$\to$10) for Pythia-410M across contamination levels. Diversity collapse occurs at all $\alpha$ levels, with the strongest decline at low-to-moderate contamination ($\alpha{=}0.25$: distinct-1 $-40.3{\pm}0.3\%$) rather than full replacement ($\alpha{=}1.0$: $-27.8{\pm}1.6\%$). $^\dagger$$\alpha{=}0.10$: single seed (seed~42, preliminary). $\alpha{=}0.00$, $\alpha{=}0.25$, $\alpha{=}0.50$, $\alpha{=}0.75$: 3-seed mean${\pm}$std (seeds 42, 43, 44); $\alpha{=}1.0$: 4-seed mean${\pm}$std (seeds 42, 43, 44, 45).}
@@ -97,7 +97,7 @@ At $\alpha{=}0.25$, the real-data fraction prevents catastrophic collapse but al
 Table~\ref{tab:distinct3_drift} reports distinct-3 drift across all contamination levels.
 Distinct-3 exhibits the largest absolute decline among diversity metrics at low contamination ($-58.9{\pm}0.9\%$ at $\alpha{=}0.25$) but attenuates at higher levels ($-30.5\%$ at $\alpha{=}1.0$), consistent with the diversity--calibration dissociation discussed in \S\ref{sec:discussion}.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Distinct-3 drift (\%, generation~0$\to$10) across contamination levels. $\alpha{=}0.00$, $\alpha{=}0.25$, $\alpha{=}0.75$: 3-seed mean${\pm}$std; $\alpha{=}1.0$: 4-seed mean${\pm}$std; $\alpha{=}0.50$: single seed.}
@@ -144,14 +144,14 @@ The stability result has a practical implication: a monitoring system need not w
 As few as 6 data points ($T_{\min}{=}5$) suffice for reliable consensus-based detection at high contamination ($\alpha{=}1.0$), though the detection boundary $\alpha_c$ at shorter windows remains above $\alpha{=}0.50$ (insufficient power at $T{=}5$ for onset-level contamination).
 The minimum requirement for Granger-type tests is $T_{\min}{\geq}5$ (below which degrees of freedom are insufficient for lag-1 regression with 2~parameters).
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_window_sensitivity.pdf}
 \caption{Detection stability as a function of minimum observation window $T_{\min}$ (Pythia-410M, $\alpha{=}1.0$, 4~seeds). PermG forward detection (6/8) and consensus classification ($K{\geq}4$) both stabilize at $T_{\min}{\geq}5$, with no significance flips for $T_{\min} \in [5, 10]$. This robustness confirms that the choice of $T_{\min}{=}5$ in the main analysis does not drive results.}
 \label{fig:window_sensitivity}
 \end{figure}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Observation window sensitivity for Tier~3 consensus ($K{\geq}4/5$) at $\alpha{=}1.0$ (Pythia-410M, 4~seeds). Tier~3 pairs: number of canary$\to$downstream pairs (out of 8 validated) reaching $K{\geq}4/5$ method agreement. TY pairs: number of effect-size reference pairs (out of 6) reaching Toda--Yamamoto significance (moderate supplementary method; \S\ref{sec:method}). Consensus stabilizes at $T_{\min}{\geq}5$; TY stabilizes at $T_{\min}{\geq}6$.}
@@ -172,7 +172,7 @@ Stable               & ---       & ---       & \checkmark & \checkmark & \checkm
 \end{tabular}}
 \end{table}
 
-\FloatBarrier
+
 \section{Robustness Analysis}
 \label{app:robustness}
 \label{app:spec_curve}
@@ -183,19 +183,19 @@ Treatment/null separation is robust to FDR threshold choice: at $q{=}0.05$, 4/36
 At the onset boundary ($\alpha{=}0.45$), minimum FDR-corrected $p$-values ($0.059$--$0.091$) are consistent with a continuous power transition rather than binary absence of signal.
 
 \paragraph{Specification curve.}
-We construct 1{,}160 specifications from 13 contamination levels, 4~seeds, and 8 canary$\to$downstream pairs (all PermG, $n_\text{perm}{=}5{,}000$, BH FDR $q{=}0.05$).
+We construct 288 method-$\alpha$ configurations from 16 contamination levels and 18 method-direction specifications (5~methods $\times$ forward/reverse $\times$ FDR-correction variants; BH FDR $q{=}0.05$).
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
-\caption{Specification curve summary (1{,}160 specifications, D120-compliant). The blind$\to$onset jump is robust across specifications: 0\% significance rate through $\alpha{=}0.45$, rising to 75\% at $\alpha{=}0.50$.}
+\caption{Specification curve summary (288 method-$\alpha$ configurations). The blind$\to$onset jump is robust across specifications: 0\% PermG significance rate through $\alpha{=}0.45$, rising to 75\% at $\alpha{=}0.50$.}
 \label{tab:spec_curve}
 \begin{tabular}{lc}
 \toprule
 Metric & Value \\
 \midrule
-Total specifications & 1{,}160 \\
-Significant (FDR $q{<}0.05$) & 536 (46.2\%) \\
+Total configurations & 288 \\
+Significant (${\geq}3/8$ pairs, FDR $q{<}0.05$) & 131 (45.5\%) \\
 \midrule
 \emph{By regime} & \\
 \quad Blind ($\alpha \leq 0.45$) & 0\% \\
@@ -205,10 +205,17 @@ Significant (FDR $q{<}0.05$) & 536 (46.2\%) \\
 \end{tabular}
 \end{table}
 
-The blind$\to$onset jump holds across the vast majority of specifications (Figure~\ref{fig:spec_curve}, main text).
+The blind$\to$onset jump holds across the vast majority of specifications (Figure~\ref{fig:spec_curve}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_spec_curve.pdf}
+\caption{Specification curve (288 configurations). The blind$\to$onset jump at $\alpha_c{\approx}0.50$ is robust across methods, pairs, and seeds.}
+\label{fig:spec_curve}
+\end{figure}
 
 \paragraph{Specification decomposition.}
-Within the 536 significant specifications (46.2\% of 1{,}160), the detection rate varies by canary$\to$downstream pair:
+Within the 131 significant configurations (45.5\% of 288), the detection rate varies by canary$\to$downstream pair:
 entropy$\to$distinct-1 and entropy$\to$distinct-2 are the most consistently detectable (significant in 75\% of above-onset specifications), while ECE$\to$perplexity is never significant (0\%, consistent with the first-differencing result in \S\ref{sec:regime}).
 MAUVE-paired specifications show intermediate rates (50\% at $\alpha{=}1.0$, 0\% at $\alpha{=}0.50$), reflecting MAUVE's floor saturation at 1.4B scale.
 
@@ -268,14 +275,14 @@ CUSUM adds value only when the signal emerges gradually across multiple generati
 \paragraph{Detection timing comparison.}
 Table~\ref{tab:sequential_timing} compares alarm generation for CUSUM and calibrated threshold across the full contamination range.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Sequential monitoring alarm timing (Pythia-410M, seed~42, fp32). ``---'' = no alarm within $T{=}10$. Both methods produce identical alarm patterns: no detection below $\alpha{=}0.50$, immediate (gen-1) detection above.}
 \label{tab:sequential_timing}
-\begin{tabular}{lccl}
+\begin{tabular}{@{}lccc@{}}
 \toprule
-$\alpha$ & CUSUM alarm & Threshold alarm & Entropy drop (\%) \\
+$\alpha$ & CUSUM & Threshold & $\Delta H$ (\%) \\
 \midrule
 0.00 & --- & --- & $-4.6$ \\
 0.10 & --- & --- & $-5.3$ \\
@@ -332,13 +339,13 @@ This method is permissive because it ignores shared trends and applies no multip
 \paragraph{PermG implementation details.}
 The permutation Granger procedure operates as follows:
 (1)~First-difference both series: $\Delta X_t = X_t - X_{t-1}$, $\Delta Y_t = Y_t - Y_{t-1}$.
-(2)~Fit unrestricted model: $\Delta Y_t = a_0 + \sum_{j=1}^{L} a_j \Delta Y_{t-j} + \sum_{j=1}^{L} b_j \Delta X_{t-j} + \epsilon_t$ (max lag $L{=}5$).
+(2)~Fit unrestricted model: $\Delta Y_t = a_0 + \sum_{j=1}^{L} a_j \Delta Y_{t-j} + \sum_{j=1}^{L} b_j \Delta X_{t-j} + \epsilon_t$ (lag $L{=}1$).
 (3)~Fit restricted model: $\Delta Y_t = a_0 + \sum_{j=1}^{L} a_j \Delta Y_{t-j} + \epsilon_t$.
 (4)~Compute observed $F$-statistic from the residual sum of squares reduction.
 (5)~Generate 5{,}000 null realizations by randomly permuting the temporal order of $\Delta X$, re-fitting unrestricted model each time.
 (6)~$p$-value $= (\text{count}(F_{\text{perm}} \geq F_{\text{obs}}) + 1) / (n_{\text{perm}} + 1)$ following~\citet{phipson2010permutation}.
 The permutation scheme destroys temporal structure in $X$ while preserving its marginal distribution, providing an exact null for the hypothesis ``past $X$ does not improve prediction of $Y$.''
-Lag selection uses AIC with maximum $L{=}5$ (constrained by $T{-}2L \geq 3$ degrees of freedom at $T{=}11$).
+We use fixed $L{=}1$ given the short series length ($T{-}2L \geq 3$ degrees of freedom at $T{=}11$); the Toda--Yamamoto procedure uses AIC-based lag selection separately.
 
 \paragraph{Direction checking.}
 For each significant pair, we additionally test the reverse direction ($Y \to X$).
@@ -357,7 +364,7 @@ The 8-pair correction is conservative relative to per-family error rate control:
 
 \noindent\emph{See Algorithm~\ref{alg:mmct} in the main text (\S\ref{sec:mmct}) for the full MMCT pseudocode and design rationale.}
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/consensus_heatmap.pdf}
 \caption{$K{\geq}3$ consensus heatmap across the $\alpha \times T$ grid (Pythia-410M, fp32). Each cell shows the number of canary$\to$diversity pairs reaching majority agreement (${\geq}3/5$ methods). Consensus detection aligns with PermG's onset at $\alpha{=}0.50$ but eliminates the non-monotonic anomaly at $\alpha{=}0.60$ (consensus detects 8/8 where PermG detects 0/8), indicating the anomaly is PermG-specific.}
@@ -380,7 +387,7 @@ Table~\ref{tab:mmct_k_operating} (main text) reports operating characteristics f
 The $K{=}3$ threshold represents a Pareto-optimal operating point: decreasing to $K{=}2$ raises FPR from 10.0\% to 38.9\% with modest TPR gain ($66.7\% \to 85.4\%$ at $\alpha{=}0.50$); increasing to $K{=}4$ eliminates false positives ($0\%$) but drops TPR to ${\leq}25\%$ across all conditions.
 At $K{=}5$ (unanimity), the expected detection rate is below 5\% everywhere---only achievable when all five methods, including the 94\%-FPR NaiveXCorr, agree.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_mmct_k_operating.pdf}
 \caption{MMCT operating characteristics as a function of consensus threshold $K$. Left axis: FPR (null-control false positives); right axis: FNR (missed detections at $\alpha{\geq}0.50$). $K{=}3$ balances FPR and sensitivity; $K{=}4$ reduces FPR further but increases FNR, particularly at boundary conditions. $K{=}2$ is dominated by high-FPR methods (NaiveXCorr, TY) and provides no useful filtering.}
@@ -393,7 +400,7 @@ At $K{=}5$ (unanimity), the expected detection rate is below 5\% everywhere---on
 Table~\ref{tab:method-comparison} summarizes the methodological coverage of existing canary and monitoring analyses across the diagnostic dimensions identified in \S\ref{sec:method}.
 No prior work combines all six dimensions.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Methodological comparison of canary and monitoring analyses. \checkmark\ = present, $\times$ = absent, $\circ$ = partial (${\leq}2$ levels or limited replication). Diff.\ = differencing/stationarity controls. Multi-M.\ = ${\geq}2$ independent statistical methods. MTC = multiple testing correction. Regime = systematic variation of $\alpha$. Seeds = ${\geq}3$ independent seeds. Arch.\ = ${\geq}2$ architecturally distinct model families.}
@@ -453,7 +460,7 @@ Nonetheless, the possibility that entropy's sensitivity partly reflects measurem
 \paragraph{Cross-architecture failure mode analysis.}
 The four non-confirming conditions in the cross-architecture evaluation each isolate a distinct assumption violation:
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Failure mode taxonomy for non-confirming cross-architecture conditions ($\alpha{=}1.0$).}
@@ -479,7 +486,7 @@ The entropy decoupling (SmolLM3-3B: entropy 0/4, ECE 3/4) directly violates the 
 \paragraph{Scale verification (Pythia-1.4B).}
 \label{app:scale_14b}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Pythia-1.4B phase diagram replication: PermG forward/reverse detection and $K{\geq}3$ consensus across contamination levels and observation windows (fp32). $\dagger$: bidirectional confounding (reverse${}>0$). Denominator is 8 unless marked $^{*}$ (6-pair basis, MAUVE unavailable).}
@@ -523,7 +530,7 @@ Phase-diagram structure is qualitatively preserved at 1.4B (Table~\ref{tab:14b_p
 The 410M sync-dip does not reproduce at 1.4B (4/6 at $\alpha{=}0.60$, $T{=}10$).
 Bidirectional confounding is seed-specific: s43 shows reverse significance at $\alpha{=}0.60$ (6/8) and $\alpha{=}0.75$ (5/8) for $T{=}10$, while s42 maintains 0 reverse across all conditions.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_14b_phase.pdf}
 \caption{Pythia-1.4B phase diagram (PermG forward, 6-pair basis). Detection boundary ($\alpha_c \approx 0.50$) is consistent with 410M.}
@@ -544,14 +551,14 @@ Peak PPL rises from $19.68$ to $65.37$ (a $232\%$ increase, vs.\ $112\%$ at 410M
 The larger entropy drop at 1.4B ($51.9\%$ vs.\ $40.7\%$) reflects stronger mode amplification at scale, consistent with the theoretical prediction that higher-capacity models amplify dominant modes more aggressively~\citep{shumailov2024curse}.
 
 
-\FloatBarrier
+
 \section{Per-Method Dose-Response Profiles}
 \label{app:dose_response}
 
 Table~\ref{tab:dose_response_full} reports FDR significance counts (/8 validated pairs) for all five detection methods across 12 contamination levels (seed~42, Pythia-410M, WikiText, fp32).
-PermG exhibits a sharp 0$\to$6 jump at $\alpha{=}0.50$ with a return to 0 at $\alpha{=}0.55$--$0.60$ (non-monotonic dip), while other methods show diffuse profiles: naive cross-correlation saturates at 7--8/8 across all levels including the null, and Toda--Yamamoto fluctuates without a clear onset.
+PermG exhibits a steep 0$\to$6 jump at $\alpha{=}0.50$ with a return to 0 at $\alpha{=}0.55$--$0.60$ (non-monotonic dip), while other methods show diffuse profiles: naive cross-correlation saturates at 7--8/8 across all levels including the null, and Toda--Yamamoto fluctuates without a clear onset.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Per-method FDR significance (/8 pairs) across contamination levels (Pythia-410M, seed~42, WikiText, fp32). PermG and Diff.\ XCorr use BH-corrected FDR ($q{=}0.05$); Naive XCorr, Threshold, and TY use uncorrected $p{<}0.05$ (no FDR field in pipeline). $\alpha{=}1.0$ from Pythia-410M cross-architecture condition (same seed/domain/precision).}
@@ -578,7 +585,7 @@ $\alpha$ & Naive & Diff.\ XCorr & Threshold & PermG & TY$^\S$ \\
 \end{tabular}}
 \end{table}
 
-PermG's dose-response profile most cleanly separates detection regimes: 0/8 at null, sharp 0$\to$6 onset at $\alpha{=}0.50$, non-monotonic dip at $\alpha{=}0.55$--$0.60$.
+PermG's dose-response profile most cleanly separates detection regimes: 0/8 at null, steep 0$\to$6 onset at $\alpha{=}0.50$, non-monotonic dip at $\alpha{=}0.55$--$0.60$.
 Naive monitoring baselines (PPL-slope, variance-threshold) fire at $\alpha{=}0.0$ (FPR 67--100\%) because fine-tuning drift is indistinguishable from contamination without directional testing.
 
 \paragraph{Method-specific observations.}
@@ -590,17 +597,17 @@ Its bidirectional nature (significant in both forward and reverse) prevents caus
 
 \paragraph{Inter-method agreement.}
 Cohen's $\kappa$ between all method pairs ranges from $-0.04$ (NaiveXCorr vs.\ Threshold, near-random disagreement) to $0.42$ (PermG vs.\ DiffXCorr, moderate agreement above onset).
-The low overall $\kappa{=}0.185$ across all five methods reflects the fundamental tension: permissive methods detect everywhere (including null), conservative methods detect rarely, and moderate methods disagree about boundary cases.
+The low overall $\kappa{=}0.187$ across all five methods reflects the fundamental tension: permissive methods detect everywhere (including null), conservative methods detect rarely, and moderate methods disagree about boundary cases.
 This motivates the MMCT consensus approach (\S\ref{sec:mmct}), which aggregates information from all methods while weighting by empirical reliability.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_per_method_phase_top.pdf}
-\caption{Per-method FDR-significant pair counts (/8) across contamination levels (Pythia-410M, seed~42, $T{=}10$, fp32). PermG~(d) exhibits the cleanest regime separation---zero detections through $\alpha{=}0.45$, then a sharp 0$\to$6 jump at $\alpha{=}0.50$; NaiveXCorr~(a) saturates at 7--8/8 across all levels including null; DiffXCorr~(b) detects signal but cannot separate forward from reverse. The visual contrast across panels illustrates why method choice is itself a primary source of variability ($\kappa{=}0.185$).}
+\caption{Per-method FDR-significant pair counts (/8) across contamination levels (Pythia-410M, seed~42, $T{=}10$, fp32). PermG~(d) exhibits the cleanest regime separation---zero detections through $\alpha{=}0.45$, then a steep 0$\to$6 jump at $\alpha{=}0.50$; NaiveXCorr~(a) saturates at 7--8/8 across all levels including null; DiffXCorr~(b) detects signal but cannot separate forward from reverse. The visual contrast across panels illustrates why method choice is itself a primary source of variability ($\kappa{=}0.187$).}
 \label{fig:per_method_phase}
 \end{figure}
 
-\begin{figure}[t]\ContinuedFloat
+\begin{figure}[H]\ContinuedFloat
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_per_method_phase_bottom.pdf}
 \caption[]{(\textit{continued})}
@@ -610,7 +617,7 @@ This motivates the MMCT consensus approach (\S\ref{sec:mmct}), which aggregates 
 \label{app:alpha060}
 
 The non-monotonic detection gap at $\alpha{=}0.60$ (\S\ref{sec:dose_response}) is consistent across seeds: PermG yields 0/8 FDR-significant forward pairs for both seed~42 (v4 recompilation) and seed~43.
-An earlier pipeline version (v3, seed~42) reported 3/8; the discrepancy is resolved by the d120 recompilation that corrected FPR calibration.
+An earlier pipeline version (v3, seed~42) reported 3/8; the discrepancy is resolved by the current pipeline version, which corrected FPR calibration.
 
 \paragraph{Detailed metrics at $\alpha{=}0.60$.}
 Despite PermG non-detection, metric drift at $\alpha{=}0.60$ is substantial: token entropy $-28.5\%$ (gen-0: $3.234$, gen-10: $2.311$), ECE $+1561\%$ ($0.0108 \to 0.179$), perplexity $+92.3\%$ ($26.95 \to 51.83$).
@@ -630,7 +637,7 @@ This scale-dependence suggests the phenomenon is architecture-specific: at large
 The sigmoid fit excluding $\alpha{=}0.60$ yields $k{=}5.66$, $\alpha_c{=}0.765$, $R^2{=}0.286$; including it degrades $R^2$ to 0.205 and shifts $\alpha_c$ rightward by 0.058, confirming the point is a genuine outlier rather than noise.
 Predicted detection probability at $\alpha{=}0.60$ under the sigmoid model is $P(\mathrm{det}){=}0.282$, far below the observed 0/8 (0.00), indicating the anomaly cannot be explained by smooth dose-response variation.
 
-\FloatBarrier
+
 \section{PPL Threshold Baseline}
 \label{app:ppl_threshold}
 
@@ -677,7 +684,7 @@ The downward trend indicates that power grows faster than $\sqrt{T}$---each addi
 TY bootstrap power simulations (200 reps, same DGP) yield substantially lower power at comparable $T$: $T{=}10$ power${=}0.205$ (vs.\ PermG 0.51 at $\beta{=}2.0$), $T{=}20$ power${=}0.409$, with Type~I error rate 8.1\% (above nominal).
 TY's $d$-augmented lag structure wastes degrees of freedom in short series, explaining its inferior power-FPR tradeoff relative to PermG.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{PermG power analysis: $\beta_{50}$ (coupling for 50\% power) under BH-FDR correction ($q{=}0.05$, 8 pairs). Dashes: $<$50\% power not reached within $\beta \leq 2.0$.}
@@ -699,19 +706,19 @@ $T$ & $\beta_{50}$ & $\beta_{50} \cdot \sqrt{T}$ & FPR (raw) & FPR (FDR) \\
 \section{Non-Stationarity Robustness Analysis}
 \label{app:nonstationarity}
 
-Monte Carlo simulation (AR(1) DGP, $T{=}11$, 1{,}000 reps) shows PermG FPR inflates to ${\sim}10\%$ under strong non-stationarity ($\varphi{\geq}0.95$), while first-differencing maintains proper size ($4.2$--$6.6\%$) at the cost of reduced power (Table~\ref{tab:nonstationarity_sim}).
-Our pipeline applies first-differencing before permutation testing, combining both advantages.
-Under null conditions ($\alpha{=}0.0$), token entropy exhibits $\varphi{=}-0.51$ (far from the danger zone); first-differencing reduces distinct-1's high raw $\varphi$ ($0.81$--$0.97$, reflecting deterministic trend) to $-0.14$--$0.44$.
-Our empirical FPR of 4/60 (6.7\%) confirms adequate size control.
-
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_ar1_diagnostic.pdf}
 \caption{AR(1) coefficient estimates across five contamination levels (Pythia-410M, seed~42). (a)~Token entropy: raw $\varphi$ transitions from negative ($-0.51$ at $\alpha{=}0.00$) to near-unit-root ($1.00$ at $\alpha{=}1.00$), but first-differencing keeps all values below 0.98. (b)~Distinct-1: raw $\varphi$ is uniformly high ($0.75$--$0.95$) even at null, driven by deterministic trend; first-differencing reduces all to ${\leq}0.24$. Dashed red line: $\varphi{=}0.95$ danger zone.}
 \label{fig:ar1_diagnostic}
 \end{figure}
 
-\begin{table}[t]
+Monte Carlo simulation (AR(1) DGP, $T{=}11$, 1{,}000 reps) shows PermG FPR inflates to ${\sim}10\%$ under strong non-stationarity ($\varphi{\geq}0.95$), while first-differencing maintains proper size ($4.2$--$6.6\%$) at the cost of reduced power (Table~\ref{tab:nonstationarity_sim}).
+Our pipeline applies first-differencing before permutation testing, combining both advantages.
+Under null conditions ($\alpha{=}0.0$), token entropy exhibits $\varphi{=}-0.51$ (far from the danger zone); first-differencing reduces distinct-1's high raw $\varphi$ ($0.81$--$0.97$, reflecting deterministic trend) to $-0.14$--$0.44$.
+Our empirical FPR of 4/60 (6.7\%) confirms adequate size control.
+
+\begin{table}[H]
 \centering
 \small
 \caption{Size and power under AR(1) DGP ($T{=}11$, 1{,}000 reps). First-differencing maintains nominal size; PermG FPR inflates at $\varphi{\geq}0.95$.}
@@ -735,7 +742,7 @@ Table~\ref{tab:empirical_ar1} reports estimated AR(1) coefficients for all metri
 Under the null, all metrics exhibit $|\varphi| < 0.60$ in raw levels and $|\varphi| < 0.30$ after first-differencing, well within the safe zone.
 Under treatment, raw distinct-$n$ series reach $\varphi{=}0.81$--$0.97$ (near unit root), but first-differencing reduces these to $\varphi{=}-0.14$--$0.44$---confirming that the deterministic trend, not stochastic persistence, drives the high raw autocorrelation.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Empirical AR(1) coefficients (Pythia-410M, 4~seeds). ``Raw'' = levels; ``Diff'' = first-differenced.}
@@ -769,7 +776,7 @@ Under the AR(1) DGP ($\varphi{=}0.50$, $\beta{=}0.6$), first-differenced PermG a
 At $\varphi{=}0.95$ the cost narrows (28.7\% vs.\ 41.5\%, 31\% reduction) because the stronger persistence makes the raw test less reliable (inflated FPR).
 Our pipeline accepts this power cost as a necessary tradeoff: at the empirical autocorrelation levels observed in treatment series ($\varphi{=}0.72$--$0.97$ in raw levels), raw Granger testing would produce ${\sim}10\%$ FPR, invalidating the detection framework.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Power cost of first-differencing under simulated AR(1) DGP ($T{=}11$, $\beta{=}0.6$, 1{,}000 reps). The power reduction is the price paid for valid size control.}
@@ -789,27 +796,28 @@ The practical consequence: at $T{=}10$, the differencing-induced power loss is t
 Extending observation to $T{=}20$ more than compensates: differenced power at $T{=}20$ exceeds raw power at $T{=}10$ for $\varphi \leq 0.95$, providing both valid size control and superior detection sensitivity.
 This explains the large detection gains observed in the $T{=}20$ extension (\S\ref{app:t20_comparison}).
 
+
 \section{Shapley Value Analysis}
 \label{app:shapley}
 
-Shapley values~\citep{shapley1953value} computed over all $2^5{=}32$ coalitions quantify each method's marginal contribution to FPR and FNR (Table~\ref{tab:shapley_6pair}).
-DiffXCorr achieves the best combined Shapley ($-0.299$) but cannot separate forward from reverse; among directional methods, PermG ranks best ($-0.141$).
-The 8-pair variant (including MAUVE) yields identical rankings.
-
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_shapley_contribution_top.pdf}
 \caption{Shapley value decomposition by method. FPR contribution (positive = worse) and FNR contribution (negative = better) are shown for each of the five detection methods. DiffXCorr achieves the best combined Shapley ($-0.299$) but lacks directional separation; among directional methods, PermG ranks best ($-0.141$). NaiveXCorr contributes the most FPR ($+0.609$) due to its inability to distinguish signal from null drift.}
-\label{fig:shapley_contribution}
+\label{fig:shapley_contribution_app}
 \end{figure}
 
-\begin{figure}[t]\ContinuedFloat
+\begin{figure}[H]\ContinuedFloat
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_shapley_contribution_bottom.pdf}
 \caption[]{(\textit{continued})}
 \end{figure}
 
-\begin{table}[t]
+Shapley values~\citep{shapley1953value} computed over all $2^5{=}32$ coalitions quantify each method's marginal contribution to FPR and FNR (Table~\ref{tab:shapley_6pair}).
+DiffXCorr achieves the best combined Shapley ($-0.299$) but cannot separate forward from reverse; among directional methods, PermG ranks best ($-0.141$).
+The 8-pair variant (including MAUVE) yields identical rankings.
+
+\begin{table}[H]
 \centering
 \small
 \caption{Shapley value decomposition (6-pair, MAUVE excluded). Combined = FPR + FNR (more negative = better).}
@@ -827,14 +835,13 @@ Toda--Yamamoto       & $+0.150$ & $-0.069$ & $+0.082$ \\
 \end{tabular}
 \end{table}
 
-
 \section{MMCT Weight Robustness Ablation}
 \label{app:weight_robustness}
 
 PermG ranks first among directional methods under all four weighting schemes tested (equal, cap-5, cap-10, FPR-inverse cap-100), confirming the ranking is not an artifact of the weighting scheme.
 Cap-10 and cap-100 yield identical values (consensus threshold saturates), and equal weighting still gives PermG the best combined Shapley ($-0.152$) among directional methods.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{PermG combined Shapley ($\phi^{\text{comb}}$) under four weighting schemes. Rankings are invariant to weight choice.}
@@ -862,7 +869,7 @@ The invariance across weighting schemes (Table~\ref{tab:weight_robustness}) conf
 Marginal contributions vary substantially across canary$\to$downstream pairs (Table~\ref{tab:shapley_per_pair}).
 Token entropy$\to$distinct-1 produces the most consistent positive contribution across coalitions (std${=}0.021$), while ECE$\to$perplexity shows the highest variance (std${=}0.089$), reflecting the contemporaneous coupling issue (\S\ref{app:channel_effect_size}).
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Shapley contribution by canary$\to$downstream pair (PermG, 6-pair basis). $\phi^{\text{FNR}}$ = FNR reduction (more negative = better). Std = standard deviation across all $2^4$ coalitions that include this pair.}
@@ -893,26 +900,26 @@ DiffXCorr shows the opposite pattern: its marginal contribution \emph{decreases}
 \section{PermG FPR Independence Analysis}
 \label{app:fpr_independence}
 
-Table~\ref{tab:null_fpr_methods} reports null-control FPR across nine seeds (54 pairs, 6-pair basis); a tenth seed (s51) yields 0~PermG FP, giving pooled 4/60${=}$6.7\% (CI $[1.8\%, 16.2\%]$).
-All four FP occur in te$\to$distinct pairs in seeds~45/50 (8/10 seeds yield 0~FP).
-$K{\geq}3$ consensus produces 6/60 FP (10.0\%), of which PermG contributes to only 2.
-At $T{=}15$, PermG FPR drops to 0/12 (0\%).
-
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_fpr_sensitivity.pdf}
 \caption{Per-seed FPR distribution across detection methods (Pythia-410M, $\alpha{=}0.0$, 10~seeds). Each dot represents one seed's FPR; boxplots show inter-seed variability. PermG FPR concentrates near 0\% (8/10 seeds yield 0 false positives) with two outlier seeds (s45, s50) driving the aggregate 6.7\%. NaiveXCorr exhibits uniformly high FPR (${\geq}83\%$) across all seeds.}
 \label{fig:fpr_sensitivity}
 \end{figure}
 
-\begin{figure}[t]
+Table~\ref{tab:null_fpr_methods} reports null-control FPR across nine seeds (54 pairs, 6-pair basis); a tenth seed (s51) yields 0~PermG FP, giving pooled 4/60${=}$6.7\% (CI $[1.8\%, 16.2\%]$).
+All four FP occur in te$\to$distinct pairs in seeds~45/50 (8/10 seeds yield 0~FP).
+$K{\geq}3$ consensus produces 6/60 FP (10.0\%), of which PermG contributes to only 2.
+At $T{=}15$, PermG FPR drops to 0/12 (0\%).
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_null_fpr_diagnostic.pdf}
 \caption{Null-control diagnostic: PermG $p$-value distributions under null ($\alpha{=}0.0$) across 10~seeds. Most seeds show $p$-values uniformly distributed above 0.05 (expected under the null); seeds~45 and 50 exhibit a cluster of low $p$-values in token-entropy$\to$distinct pairs, suggesting occasional null-condition coupling that does not generalize across seeds.}
 \label{fig:null_fpr_diagnostic}
 \end{figure}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Null-control FPR by method ($\alpha{=}0.0$, BH-FDR $q{=}0.05$). $^\ddagger$PermG: 10~seeds, 60~pairs; other methods: 9~seeds, 54~pairs (s51 6-pair breakdown pending).}
@@ -932,20 +939,19 @@ Naive XCorr & uncorr. & 51/54 & 94.4 \\
 \end{tabular}}
 \end{table}
 
-\FloatBarrier
 \subsection{Per-Seed FPR Breakdown}
 \label{app:per_seed_fpr}
 
 Table~\ref{tab:per_seed_fpr_8pair} reports FPR on a per-seed, per-method basis for the original 3-seed cohort (s42, s43, s44; 8-pair basis including MAUVE), while Table~\ref{tab:per_seed_fpr_6pair} extends to the 6-seed expansion (s45--s51; 6-pair basis excluding MAUVE).
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_bootstrap_fpr.pdf}
 \caption{Bootstrap confidence intervals for FPR estimates (10{,}000 resamples, 10~seeds). PermG's 95\% CI ($[1.8\%, 16.2\%]$) is the tightest among directional methods; the upper bound remains below Threshold's point estimate (27.8\%). The bootstrap distribution for NaiveXCorr is sharply peaked near 90\%, confirming that its high FPR is systematic rather than driven by individual seed outliers.}
 \label{fig:bootstrap_fpr}
 \end{figure}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Per-seed FPR (8-pair basis, $\alpha{=}0.0$, Pythia-410M, seeds 42--44). PermG achieves 0/8 on all three seeds; NaiveXCorr ${\geq}7/8$ on all.}
@@ -964,7 +970,7 @@ Pooled & 0.0\% & 37.5\% & 25.0\% & 16.7\% & 91.7\% \\
 \end{tabular}}
 \end{table}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Per-seed PermG FPR (6-pair basis, $\alpha{=}0.0$, seeds 45--51). Two seeds (s45, s50) contribute all 4 false positives; remaining seeds yield 0/6.}
@@ -988,11 +994,11 @@ The concentration of false positives in token-entropy$\to$distinct pairs at seed
 $K{\geq}3$ consensus FPR on the 6-pair basis is 6/36${=}$16.7\%; of these 6 false positives, only 2 include PermG (both at s50)---the remaining 4 are driven by high-FPR methods (NaiveXCorr $+$ Threshold $+$ TY) reaching consensus without PermG participation.
 This decomposition clarifies why $K{\geq}3$ FPR exceeds standalone PermG FPR: the consensus mechanism aggregates false positives from multiple methods rather than filtering them.
 
-\FloatBarrier
+
 \section{Sigmoid Transition Shape}
 \label{app:sigmoid_shape}
 
-Sigmoid regression on the original 13-point $T{=}10$ grid yields $\alpha_c = 0.483 \pm 0.006$ but $k = 478 \pm 475$ ($\mathrm{SE}(k) \approx k$), indicating that the coarse grid cannot constrain the transition shape.
+Sigmoid regression on the original 13-point $T{=}10$ grid yields $\alpha_c = 0.483$ (bootstrap 95\% CI $[0.43, 0.56]$) but $k = 478 \pm 475$ ($\mathrm{SE}(k) \approx k$), indicating that the coarse grid constrains the midpoint but not the transition shape.
 Dense $\alpha$ sampling (17~values at $T{=}10$) resolves this ambiguity: formal likelihood-ratio testing strongly favors a smooth sigmoid over a literal step function ($\Delta\mathrm{AIC}{=}-110$), with fitted steepness $k{=}15.7$ (95\% CI $[9.4, 28.2]$).
 The transition is steep but finite-width, not a literal discontinuity.
 This observed steepness exceeds what smooth signal models predict: VAR(1) simulations under H0 (linear, $k{=}6.1$) and H0$'$ (concave, $k{=}4.9$) produce onset sigmoids with $k{=}4.9$--$6.1$ (\S\ref{app:power_sim}), yielding steepness ratios $k_{\mathrm{obs}} / k_{\mathrm{H0}} \approx 2.6$--$3.2$ (CI lower bound ratio ${\approx}2$).
@@ -1010,7 +1016,7 @@ A generalized logistic ($+1$ parameter for asymmetry $\nu$) adds $+2$ AIC penalt
 \paragraph{Transition width characterization.}
 The 90\% transition width---the $\alpha$ range over which detection probability rises from 5\% to 95\%---quantifies the sharpness of the regime boundary (Table~\ref{tab:transition_width}).
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Sigmoid transition width (90\% range) by observation length and signal model. Narrower width indicates sharper regime onset.}
@@ -1028,17 +1034,17 @@ H0$'$ concave simulation & 0.090 & 0.521 & 4.9 \\
 \end{tabular}
 \end{table}
 
-The dense-sampling transition width ($\Delta\alpha{=}0.028$, corresponding to $\alpha \in [0.467, 0.495]$) is ${\sim}3{\times}$ narrower than smooth-model predictions (0.072--0.090), confirming the anomalous sharpness.
-In practical terms, a difference of $\Delta\alpha{=}0.03$ in contamination fraction determines whether detection is impossible (0\%) or reliable (75\%)---this represents approximately 150 additional synthetic samples out of 5{,}000.
-The narrow transition has implications for monitoring systems: slight increases in synthetic data fraction near the boundary produce large changes in detectability, creating a ``cliff effect'' where monitoring transitions from false security to reliable alarm with minimal change in the underlying contamination level.
-A system operating at $\alpha{=}0.47$ (undetectable) and drifting to $\alpha{=}0.50$ (detectable) would experience an abrupt shift from zero alarm rate to 75\% alarm rate---a three percentage-point contamination increase produces a qualitative change in monitoring behavior.
-
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/differencing_dmax.pdf}
 \caption{First-differencing order selection diagnostic. The optimal differencing order $d_{\max}$ is evaluated via ADF test statistics across all canary$\to$downstream series at $\alpha{=}1.0$. First-order differencing ($d{=}1$) achieves stationarity in all series (ADF $p{<}0.05$), confirming that higher-order differencing is unnecessary and would incur additional power loss.}
 \label{fig:differencing_dmax}
 \end{figure}
+
+The dense-sampling transition width ($\Delta\alpha{=}0.028$, corresponding to $\alpha \in [0.467, 0.495]$) is ${\sim}3{\times}$ narrower than smooth-model predictions (0.072--0.090), confirming the anomalous sharpness.
+In practical terms, a difference of $\Delta\alpha{=}0.03$ in contamination fraction determines whether detection is impossible (0\%) or reliable (75\%)---this represents approximately 150 additional synthetic samples out of 5{,}000.
+The narrow transition has implications for monitoring systems: slight increases in synthetic data fraction near the boundary produce large changes in detectability, creating a ``cliff effect'' where monitoring transitions from false security to reliable alarm with minimal change in the underlying contamination level.
+A system operating at $\alpha{=}0.47$ (undetectable) and drifting to $\alpha{=}0.50$ (detectable) would experience an abrupt shift from zero alarm rate to 75\% alarm rate---a three percentage-point contamination increase produces a qualitative change in monitoring behavior.
 
 \section{Intervention Threshold Sensitivity}
 \label{app:intervention_sensitivity}
@@ -1061,7 +1067,7 @@ Without intervention at $\alpha{=}1.0$: gen-10 PPL${=}1003.73$, distinct-1${=}0.
 With predictive cessation: gen-10 PPL${=}21.29$, distinct-1${=}0.0844$ ($+19.9\%$ higher diversity).
 The intervention reduces peak perplexity by 64\% ($56.99$ vs.\ $157.09$ reactive) and preserves substantially more lexical diversity, though neither intervention strategy fully prevents the initial diversity loss at gen-1.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_cusum_monitoring.pdf}
 \caption{CUSUM sequential monitoring versus calibrated threshold (Pythia-410M, $\alpha{=}1.0$). Both methods trigger at generation~1 because the entropy drop ($|\Delta x|{>}0.7$) greatly exceeds null variability ($\sigma_0{\approx}0.03$). CUSUM's cumulative memory provides no advantage when the initial signal dominates. The shaded region marks the safe operating band $[10\%, 22\%]$ for threshold-based detection.}
@@ -1079,7 +1085,7 @@ Granger tests correctly assign low $F$ to contemporaneous relationships.
 \paragraph{Lag structure decomposition.}
 Table~\ref{tab:lag_structure} reports the cross-correlation peak lag for each canary$\to$downstream channel, illustrating the structural difference that drives Granger detectability.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Cross-correlation peak lag by channel (Pythia-410M, $\alpha{=}1.0$, 4~seeds). Negative lag = canary leads. Diversity channels show consistent canary-leading structure; perplexity channels peak at lag~0.}
@@ -1104,7 +1110,7 @@ This is not a limitation of the test but a correct inference---perplexity is not
 \paragraph{Fisher Z-transform comparison.}
 To formally test whether diversity and perplexity channels differ in lagged correlation magnitude, we apply the Fisher Z-transform to peak cross-correlation coefficients (Table~\ref{tab:fisher_z}).
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Fisher Z-transform comparison of channel correlations (Pythia-410M, $\alpha{=}1.0$, 4~seeds). $Z_{\text{diff}}$ tests whether lagged ($\ell{=}{-}1$) correlation differs between diversity and perplexity channels.}
@@ -1130,7 +1136,7 @@ This reversal explains the Granger $F$-statistic asymmetry: perplexity channels 
 A Granger test measures whether \emph{past} values of $X$ predict \emph{current} $Y$ beyond $Y$'s own history; contemporaneous coupling produces zero improvement, hence $F \approx 0$.
 The Fisher Z analysis confirms that the canary$\to$perplexity non-detection is a correct statistical inference about temporal structure rather than a power limitation.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_channel_effect.pdf}
 \caption{Channel effect size comparison: Granger $F$-statistic for canary$\to$diversity versus canary$\to$perplexity channels (Pythia-410M, $\alpha{=}1.0$, 4~seeds). Diversity channels produce $20$--$28{\times}$ higher $F$-statistics than perplexity channels, reflecting the temporal structure difference: diversity correlations peak at canary-leading lags (81\% at lag${<}0$), while perplexity correlations are contemporaneous (50\% at lag${=}0$).}
@@ -1149,7 +1155,7 @@ Table~\ref{tab:mi_blind} reports Gaussian MI between token entropy and distinct-
 MI increases monotonically with $\alpha$, confirming that the entropy--diversity coupling strengthens continuously across the blind$\to$detection boundary.
 The detection onset at $\alpha_c$ therefore reflects a power threshold (sufficient signal-to-noise for PermG to detect the coupling) rather than a qualitative change in the underlying statistical relationship.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Gaussian MI lower bound between token entropy and distinct-1 across the blind zone (Pythia-410M, $T{=}10$, seed~42).}
@@ -1170,9 +1176,7 @@ $\alpha$ & $\hat{I}_G$ (bits) & PermG \\
 \subsection{Partial Correlation Analysis}
 \label{app:partial_corr}
 
-Partial correlations controlling for generation number (Table~\ref{tab:partial_corr}) show that contemporaneous associations drop after trend removal ($\bar{|r|}$: $0.590{\to}0.381$ at $\alpha{=}0.50$), while lagged correlations \emph{strengthen} ($0.759{\to}0.841$), with 35/36 detection-condition pairs retaining significance.
-
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Partial correlation controlling for generation. Lagged partial $|r|$ increases after trend removal, confirming genuine temporal precedence.}
@@ -1193,18 +1197,13 @@ $\alpha$ & $\bar{|r|}$ & Sig. & $\bar{|r|}$ & Sig. & $\bar{|r|}$ & Sig. & $\bar{
 \end{tabular}}
 \end{table}
 
-\begin{figure}[t]
+Partial correlations controlling for generation number (Table~\ref{tab:partial_corr}) show that contemporaneous associations drop after trend removal ($\bar{|r|}$: $0.590{\to}0.381$ at $\alpha{=}0.50$), while lagged correlations \emph{strengthen} ($0.759{\to}0.841$), with 35/36 detection-condition pairs retaining significance.
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_partial_correlation.pdf}
 \caption{Partial correlation scatter plots for canary$\to$diversity pairs at $\alpha{=}0.75$ (Pythia-410M). Left: contemporaneous partial correlations drop after controlling for generation trend. Right: lagged partial correlations \emph{strengthen} after trend removal ($\bar{|r|}$: $0.831{\to}0.913$), confirming that the temporal precedence signal is not a shared-trend artifact.}
 \label{fig:partial_corr}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figures/fig_partial_correlation_agg.pdf}
-\caption{Aggregated partial correlation analysis across contamination levels. Lagged canary$\to$diversity correlations increase monotonically with $\alpha$ (from $0.524$ at null to $0.913$ at $\alpha{=}0.75$), while contemporaneous correlations plateau. The growing gap between lagged and contemporaneous partial $|r|$ with increasing contamination indicates that the temporal lead signal strengthens with signal-to-noise ratio.}
-\label{fig:partial_corr_agg}
 \end{figure}
 
 \paragraph{Interpretation.}
@@ -1212,6 +1211,13 @@ The partial correlation analysis serves two purposes:
 (1)~It confirms that the canary$\to$diversity temporal precedence is not driven by a shared trend (generation number): removing the linear trend \emph{strengthens} rather than eliminates the lagged association.
 (2)~It shows that the temporal signal grows with contamination level: at $\alpha{=}0.00$, lagged partial $|r|{=}0.524$ (marginal significance); at $\alpha{=}0.75$, lagged partial $|r|{=}0.913$ (universal significance, 18/18).
 This monotonic growth parallels the MI analysis and confirms that the blind-zone boundary reflects statistical power rather than a qualitative transition in the coupling structure.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_partial_correlation_agg.pdf}
+\caption{Aggregated partial correlation analysis across contamination levels. Lagged canary$\to$diversity correlations increase monotonically with $\alpha$ (from $0.524$ at null to $0.913$ at $\alpha{=}0.75$), while contemporaneous correlations plateau. The growing gap between lagged and contemporaneous partial $|r|$ with increasing contamination indicates that the temporal lead signal strengthens with signal-to-noise ratio.}
+\label{fig:partial_corr_agg}
+\end{figure}
 
 \paragraph{Null behavior.}
 At $\alpha{=}0.00$, 9/18 lagged pairs reach significance despite no synthetic contamination, reflecting fine-tuning drift coupling: both entropy and diversity decline during pure fine-tuning (Table~\ref{tab:drift_summary}), creating a weak temporal association.
@@ -1221,9 +1227,9 @@ These null-condition correlations are substantially weaker than treatment-condit
 \section{Moment Cascade Analysis}
 \label{app:moment_cascade}
 
-Onset (5\% threshold) occurs at generation~1 for entropy in all 6 conditions and at generation~2 for distinct-$n$ in all 18 pairwise comparisons (Table~\ref{tab:moment_cascade}; Figure~\ref{fig:cascade_onset}, main text).
+Onset (5\% threshold) occurs at generation~1 for entropy in all 6 conditions and at generation~2 for distinct-$n$ in all 18 pairwise comparisons (Table~\ref{tab:moment_cascade}; Figure~\ref{fig:cascade_onset}).
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Degradation onset generation (5\% threshold) by metric and condition (Pythia-410M, WikiText, fp32). Token entropy reaches onset at generation~1 in all non-null conditions; distinct-$n$ metrics follow at generation~2.}
@@ -1244,13 +1250,19 @@ Seed & $\alpha$ & Entropy & Dist-1 & Dist-2 & Dist-3 & ECE & PPL \\
 \end{tabular}}
 \end{table}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_cascade_onset.pdf}
+\caption{Cascade onset timeline (Pythia-410M, WikiText, fp32). Entropy and ECE reach onset at generation~1; distinct-$n$ follows at generation~2. The ordering $t_H \leq t_D$ holds across all conditions.}
+\label{fig:cascade_onset}
+\end{figure}
 
 ECE shows onset at generation~1 at $\alpha{\geq}0.50$; perplexity never reaches 5\% onset at low contamination ($\alpha{\leq}0.25$).
 
 \paragraph{Onset threshold sensitivity.}
 Table~\ref{tab:onset_threshold_sensitivity} examines how the cascade ordering result depends on the choice of onset threshold (5\%, 10\%, 15\%, 20\%).
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Cascade ordering $t_H \leq t_D$ validity as a function of onset threshold (Pythia-410M, 6 conditions, $\alpha{\geq}0.10$).}
@@ -1269,7 +1281,7 @@ Threshold & $t_H \leq t_D$ & $t_H = t_D$ & $t_H > t_D$ \\
 
 At all thresholds, the ordering $t_H \leq t_D$ is never violated ($t_H > t_D$ in 0/24 cells).
 At the strictest threshold (5\%), entropy precedes diversity by exactly one generation in all 6 conditions.
-At relaxed thresholds (${\geq}15\%$), some conditions show simultaneous onset ($t_H = t_D$), because the larger threshold absorbs the diversity lag---consistent with the margin condition in Design Principle~\ref{prop:div_lag}.
+At relaxed thresholds (${\geq}15\%$), some conditions show simultaneous onset ($t_H = t_D$), because the larger threshold absorbs the diversity lag---consistent with the margin condition in Observation~\ref{prop:div_lag}.
 
 \paragraph{MAUVE cascade position.}
 MAUVE~\citep{pillutla2021mauve} onset occurs at generation~2--3, consistently after distinct-$n$ onset (gen-2), establishing a three-phase cascade: $\{H, \mathrm{ECE}\} \to \mathrm{Dist}\text{-}n \to \mathrm{MAUVE}$.
@@ -1290,7 +1302,7 @@ We test this by binning continuous entropy into discrete levels and re-running t
 
 For each of 7~experiments at $\alpha{=}1.0$ (spanning Pythia-410M, GPT-2-medium, OPT-1.3B, and Pythia-1.4B), we discretize the entropy time series using equal-width and equal-frequency binning at 5, 10, 15, and 20~bins, then apply the same PermG test (5{,}000 permutations, first-differenced, max lag~1) on binned entropy$\to$distinct-1.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Discretized entropy Granger test: number of experiments (out of 7) with FDR-significant entropy$\to$distinct-1 at each binning resolution and method. Continuous baseline: 7/7.}
@@ -1314,10 +1326,11 @@ The Pythia-410M reference case retains significance down to 5~equal-width bins (
 These results confirm that the temporal precedence finding is not solely attributable to continuous measurement resolution: even moderate discretization (${\geq}15$~levels, well below the effective resolution of distinct-$n$) preserves the signal across all tested architectures, though extreme quantization (${\leq}5$~bins) can eliminate it.
 
 
+
 \section{Cascade Ordering Theory: Derivations}
 \label{app:cascade_theory}
 
-This section provides the full derivations for Design Principle~\ref{thm:entropy_leads} and Design Principle~\ref{prop:div_lag} from \S\ref{sec:cascade}, plus supporting results.
+This section provides the full derivations for Observation~\ref{thm:entropy_leads} and Observation~\ref{prop:div_lag} from \S\ref{sec:cascade}, plus supporting results.
 
 \begin{assumption}[Mode Amplification]\label{ass:mode_amp}
 The training map $\mathcal{T}$ redistributes probability mass from low-probability to high-probability tokens: there exists a threshold $\bar{p}$ such that $\mathcal{T}(p)_i > p_i \Rightarrow p_i \geq \bar{p}$ and $\mathcal{T}(p)_j < p_j \Rightarrow p_j \leq \bar{p}$.
@@ -1349,7 +1362,10 @@ Token $i$ exits the effective support iff $p_i > \epsilon$ and $p_i + \delta_i \
 If $\|\delta\|_\infty < \gamma$, no token satisfies this condition.
 \end{proof}
 
-\paragraph{Derivation of Design Principle~\ref{thm:entropy_leads}.}
+\medskip
+\noindent\textbf{Derivations from the propositions above.}
+
+\paragraph{Derivation of Observation~\ref{thm:entropy_leads}.}
 \emph{Part (a):} Take any mode-amplifying $\delta$ with $\|\delta\|_\infty < \gamma(p,\epsilon)$.
 By Proposition~\ref{prop:div_threshold}, $\Delta S_\epsilon = 0$.
 By Proposition~\ref{prop:entropy_first}, $\Delta H < 0$.
@@ -1358,24 +1374,27 @@ Such $\delta$ exists for all $\alpha < \gamma / \max_i |\mathcal{T}(p)_i - p_i|$
 Under mode amplification, this implies $p_k \leq \bar{p}$; the total mass transferred to high-probability tokens ensures $\overline{\log p}^+ > \overline{\log p}^-$.
 By Proposition~\ref{prop:entropy_first}, $\Delta H < 0$. $\square$
 
-\paragraph{Derivation of Design Principle~\ref{prop:div_lag}.}
+\paragraph{Derivation of Observation~\ref{prop:div_lag}.}
 By the margin condition, at every generation $s \leq t_H$ the perturbation norm $\alpha\|\mathcal{T}(p_s) - p_s\|_\infty$ is less than $\gamma(p_s, \epsilon)$.
 By Proposition~\ref{prop:div_threshold}, no token exits the effective support at any $s \leq t_H$, so $\Delta S_\epsilon = 0$ for all $s \leq t_H$.
 Since time is discrete, $t_D \geq t_H + 1$. $\square$
+
+\medskip
+\noindent\textbf{ECE co-movement and empirical validation.}
 
 \paragraph{ECE co-movement (qualitative argument).}
 Under conditional mode amplification (peakier $q_\theta(\cdot|x)$ at each generation), per-token conditional entropy $h(x) = H(q_\theta(\cdot|x))$ decreases while confidence $c(x) = \max_y q_\theta(y|x) \geq \exp(-h(x))$ increases.
 Averaging: $\bar{H}_t$ decreases, $C_t$ increases.
 With accuracy approximately stationary in early collapse ($A_t \approx A_0$), $\Delta\mathrm{ECE} \approx \Delta C_t > 0$ whenever $\Delta\bar{H}_t < 0$.
 This argument establishes the direction of co-movement; the quantitative relationship depends on distribution geometry.
-$\bar{H}_t$ denotes mean conditional entropy $\mathbb{E}_{x \sim p_{\text{eval}}}[h(x)]$, which differs from the marginal entropy $H_t = -\sum_i p_t(i)\log p_t(i)$ used in Design Principle~\ref{thm:entropy_leads}; under mode amplification, both decrease monotonically, so the cascade ordering is consistent across both formulations.
+$\bar{H}_t$ denotes mean conditional entropy $\mathbb{E}_{x \sim p_{\text{eval}}}[h(x)]$, which differs from the marginal entropy $H_t = -\sum_i p_t(i)\log p_t(i)$ used in Observation~\ref{thm:entropy_leads}; under mode amplification, both decrease monotonically, so the cascade ordering is consistent across both formulations.
 
 \paragraph{Empirical ECE drift across contamination levels.}
 ECE co-movement with entropy is monotonic across all tested $\alpha$ values (Table~\ref{tab:ece_drift}).
 At $\alpha{=}0.25$, ECE increases by $+79.2\%$ while entropy decreases by $-4.7\%$---the asymmetry in magnitude reflects ECE's nonlinear dependence on confidence via the $\max$ operator.
 At $\alpha{=}1.0$, ECE drift reaches $+3762$--$3821\%$ ($0.0108 \to 0.417$--$0.424$ across seeds), the largest proportional change among all tracked metrics.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{ECE drift across contamination levels (Pythia-410M, WikiText, fp32). ECE increases monotonically with $\alpha$, co-moving with entropy decrease.}
@@ -1402,7 +1421,7 @@ At 1.4B scale, ECE follows the same pattern: gen-0 values are lower ($0.007$--$0
 Cascade ordering $t_H \leq t_D$ holds in 14/15 experiments at $\alpha \geq 0.30$ (GPT-2-medium s43: bidirectional).
 Table~\ref{tab:cascade_onset} reports onset generations for representative conditions.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Cascade onset generations (5\% threshold) for representative experiments (Pythia-410M, WikiText, fp32). Phase~1: entropy and ECE ($t_H$, $t_{\mathrm{ECE}}$); Phase~2: diversity ($t_D$, min over distinct-$n$); Phase~3: MAUVE ($t_M$). All conditions confirm the predicted ordering $t_H = t_{\mathrm{ECE}} \leq t_D \leq t_M$.}
@@ -1420,12 +1439,19 @@ Seed & $\alpha$ & $t_H$ & $t_{\mathrm{ECE}}$ & $t_D$ & $t_M$ \\
 \end{table}
 
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_detection_surface.pdf}
+\caption{Detection rate surface over $\alpha \times T$ (PermG forward, 3~seeds). Dashed curve: fitted boundary $\alpha_c(T)$. The blind zone ($\alpha \leq 0.45$) shrinks as $T$ increases.}
+\label{fig:detection_surface}
+\end{figure}
+
 \phantomsection\label{app:alpha_c_proof}
 \paragraph{Justification of the empirical boundary model.}
 At the detection threshold, $\mathrm{Power}(\alpha_c, T) = \pi^*$.
 Since $\alpha_c$ lies below the non-monotonic dip region ($\alpha_c < 0.55$), the signal model applies directly.
 From the power function $\mathrm{Power} = \Phi(S(\alpha) \cdot \sqrt{T} / \sigma)$, setting $S(\alpha_c) \cdot \sqrt{T} / \sigma = z^*$ and substituting the signal model $S(\alpha) = c\,\alpha^\beta$ yields $c\,\alpha_c^\beta = z^* \sigma / \sqrt{T}$.
-Solving: $\alpha_c(T) = (z^* \sigma / c)^{1/\beta} \cdot T^{-1/(2\beta)}$, giving the stated form with exponent $\gamma = 1/(2\beta)$.
+Solving: $\alpha_c(T) = (z^* \sigma / c)^{1/\beta} \cdot T^{-1/(2\beta)}$, giving the stated form with exponent $\eta = 1/(2\beta)$.
 
 \paragraph{Calibration and consistency.}
 Fitting $P(\mathrm{det}|\alpha,T) = \Phi(A \cdot \alpha^\beta \cdot \sqrt{T} - z_0)$ to $T \in \{10, 20\}$ yields $\beta{=}0.24$, $\alpha_\infty{=}0$.
@@ -1437,22 +1463,22 @@ Profile likelihood yields $\hat{\beta}{=}0.66$ (CI $[0.24, 0.78]$); the wide int
 At $\alpha{=}0.50$, $T{=}10$ (seed~42): entropy drops from $3.234$ to $2.649$ at gen-1 ($-18.1\%$), while distinct-1 remains at $0.0968$ (unchanged from gen-0).
 At gen-2, distinct-1 drops to $0.0812$ ($-16.1\%$).
 The mode amplification perturbation $\delta = 0.50 \cdot (\mathcal{T}(p_0) - p_0)$ satisfies $\|\delta\|_\infty < \gamma(p_0, \epsilon)$ at gen-0 (entropy responds, diversity does not), but at gen-1 the accumulated shift $p_1 = p_0 + \delta$ produces $\|\delta_1\|_\infty > \gamma(p_1, \epsilon)$, causing tokens to exit the effective support and triggering distinct-1 decline.
-The one-generation lag is thus explained by the margin condition in Design Principle~\ref{prop:div_lag}: the margin $\gamma$ is consumed by the gen-0$\to$1 perturbation, and the gen-1$\to$2 perturbation pushes tokens below the generation threshold $\epsilon$.
+The one-generation lag is thus explained by the margin condition in Observation~\ref{prop:div_lag}: the margin $\gamma$ is consumed by the gen-0$\to$1 perturbation, and the gen-1$\to$2 perturbation pushes tokens below the generation threshold $\epsilon$.
 
 \paragraph{Boundary model limitations.}
-The empirical boundary $\alpha_c(T) = A \cdot T^{-\gamma}$ is fitted to 3--4 data points ($T \in \{5, 10, 15, 20\}$) with 3 free parameters ($A$, $\gamma$, and the sub-linear signal exponent $\beta$).
-This parametric flexibility means the model can accommodate a wide range of decay shapes, and the $\gamma$ CI ($[0.64, 2.08]$) cannot distinguish sub-linear from super-linear decay.
+The empirical boundary $\alpha_c(T) = A \cdot T^{-\eta}$ is fitted to 3--4 data points ($T \in \{5, 10, 15, 20\}$) with 3 free parameters ($A$, $\eta$, and the sub-linear signal exponent $\beta$).
+This parametric flexibility means the model can accommodate a wide range of decay shapes, and the $\eta$ CI ($[0.64, 2.08]$) cannot distinguish sub-linear from super-linear decay.
 The boundary should therefore be interpreted as a descriptive summary of the observed pattern rather than a predictive model.
 Extrapolation beyond $T{=}25$ or below $\alpha{=}0.25$ is not supported by the data.
-The qualitative conclusion---detection improves with longer observation---is robust and does not depend on the specific $\gamma$ value.
+The qualitative conclusion---detection improves with longer observation---is robust and does not depend on the specific $\eta$ value.
 
 \paragraph{Sensitivity to the generation threshold $\epsilon$.}
-Design Principle~\ref{thm:entropy_leads} depends on the margin $\gamma(p, \epsilon)$, which in turn depends on the generation threshold $\epsilon \approx c/N$.
+Observation~\ref{thm:entropy_leads} depends on the margin $\gamma(p, \epsilon)$, which in turn depends on the generation threshold $\epsilon \approx c/N$.
 Increasing the generation sample size $N$ (from 5{,}000 to 10{,}000) reduces $\epsilon$ by half, widening the margin and extending the entropy-only phase.
 In our experiments ($N{=}5{,}000$, effective $\epsilon \approx 2 \times 10^{-4}$), the margin is consumed after one generation at $\alpha{\geq}0.50$, producing the observed $t_D - t_H = 1$ lag.
 At lower contamination ($\alpha{=}0.25$), the smaller perturbation preserves the margin longer: the cumulative perturbation does not exceed $\gamma$ until gen-2--3 (Table~\ref{tab:margin_consumption}), explaining the wider entropy-diversity lag at low $\alpha$.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Margin consumption across contamination levels (Pythia-410M, seed~42). ``Margin gen'' = first generation where cumulative $\|\delta\|_\infty > \gamma$. The diversity lag $t_D - t_H{=}1$ is invariant despite variable margin consumption timing.}
@@ -1478,7 +1504,7 @@ This suggests that continuous-time monitoring (within-generation token-level tra
 
 Simulated PermG detection under linear (H0), concave (H0$'$), and step (H1) signal models (1{,}000 reps, $n_\text{perm}{=}1{,}000$, BH-FDR $q{=}0.05$).
 Smooth models produce onset steepness $k{=}4.9$--$6.1$; the observed $k{=}15.7$ is ${\approx}3{\times}$ higher.
-The scaling exponent alone cannot distinguish smooth from step boundaries (H0$'$ $\gamma{=}1.87$ vs.\ observed $\gamma{=}2.08$).
+The scaling exponent alone cannot distinguish smooth from step boundaries (H0$'$ $\eta{=}1.87$ vs.\ observed $\eta{=}2.08$).
 The 6/8 detection ceiling reflects MAUVE floor saturation, not signal limitations.
 
 \paragraph{Signal model specifications.}
@@ -1492,14 +1518,14 @@ Table~\ref{tab:steepness_comparison} reports fitted sigmoid steepness $k$ for ea
 The observed $k{=}15.7$ (CI $[9.4, 28.2]$) exceeds all smooth-model predictions, with the lower CI bound ($k{=}9.4$) still ${\sim}2{\times}$ higher than the smoothest model (H0$'$: $k{=}4.9$).
 This excess steepness is consistent with---but does not prove---a genuine discontinuity in the signal structure at $\alpha_c$.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Onset steepness $k$ under different signal models (1{,}000 reps, PermG, BH-FDR $q{=}0.05$).}
 \label{tab:steepness_comparison}
 \begin{tabular}{lccc}
 \toprule
-Model & $k$ & $\gamma$ & $k_{\mathrm{obs}}/k$ \\
+Model & $k$ & $\eta$ & $k_{\mathrm{obs}}/k$ \\
 \midrule
 H0 (linear) & 6.1 & 2.08 & 2.6 \\
 H0$'$ (concave) & 4.9 & 1.87 & 3.2 \\
@@ -1509,7 +1535,7 @@ Observed & 15.7 & 2.08 & 1.0 \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/permg_power_curve.pdf}
 \caption{PermG power curves as a function of coupling strength $\beta$ for $T \in \{6, 8, 10, 15, 20\}$ (100 replications, 5{,}000 permutations, BH-FDR $q{=}0.05$). Power increases faster than $\sqrt{T}$, confirming that the theoretical $\sqrt{T}$ formula is a conservative lower bound. At $T{=}10$, 50\% power requires $\beta{\geq}2.0$; at $T{=}20$, this drops to $\beta{\approx}0.9$.}
@@ -1529,7 +1555,7 @@ Table~\ref{tab:t25_full} reports PermG forward detection counts at $T{=}25$ acro
 Two key transitions emerge: (1)~$\alpha{=}0.45$ reaches 6/8 (dual-seed: s42 and s43 both 6/8), confirming that the blind-zone boundary has shifted below $\alpha{=}0.45$ at this observation length; (2)~the $\alpha{=}0.60$ sync-dip dissolves (5/8 at $T{=}25$ vs.\ 0/8 at $T{\leq}20$), with $K{\geq}3$ consensus reaching 6/8.
 The 6/8 detection ceiling at $\alpha{=}0.45$, $0.50$, $0.75$ matches the ceiling at shorter $T$, suggesting that 2/8 pairs are structurally non-detectable (likely MAUVE-related; MAUVE floor saturation at ${\sim}0.033$ produces near-constant series).
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{PermG forward detection at $T{=}25$ (Pythia-410M, fp32). The $\alpha{=}0.45$ blind zone resolves and the $\alpha{=}0.60$ anomaly dissolves.}
@@ -1553,7 +1579,7 @@ An unexpected result at $T{=}20$: PermG detects 3/8 at $\alpha{=}0.25$, where $T
 This partial detection at very low contamination suggests that the blind zone is not absolute but power-limited: with sufficient observation length, even weak contamination signals may become detectable.
 However, 3/8 falls below the 6/8 reliability threshold we use for confirmed detection, and the result awaits multi-seed replication.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{figures/regime_map.pdf}
 \caption{Extended regime map including $T \in \{5, 10, 15, 20, 25\}$. The detection boundary shifts leftward with increasing $T$: $\alpha{=}0.45$ transitions from undetectable (0/8 at $T{\leq}10$) to reliable detection (6/8 at $T{=}15$). The $\alpha{=}0.60$ non-monotonic anomaly persists through $T{=}20$ but dissolves at $T{=}25$ (5/8).}
@@ -1567,7 +1593,7 @@ End-of-training perplexity (gen~10, Pythia-410M, s42) improves at $\alpha{=}0.05
 \paragraph{Comprehensive cross-$T$ comparison.}
 Table~\ref{tab:cross_t_full} consolidates PermG forward detection across all tested observation windows, providing a complete view of the detection landscape evolution.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{PermG forward detection (/8 pairs) across $T$ and $\alpha$ (Pythia-410M, seed~42, fp32). Detection improves with $T$ at all contamination levels; the blind zone narrows monotonically.}
@@ -1603,7 +1629,7 @@ This directional selectivity confirms that the forward-only constraint is not an
 \paragraph{Detection efficiency metrics.}
 Table~\ref{tab:detection_efficiency} reports detection efficiency---defined as the fraction of FDR-significant pairs out of 8---across observation windows, providing a normalized summary of the detection landscape.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Detection efficiency (fraction of pairs reaching FDR significance) across the $\alpha \times T$ grid (Pythia-410M, seed~42, fp32). Efficiency plateaus at 0.75 for above-onset conditions, indicating a structural detection ceiling at 6/8 pairs.}
@@ -1636,7 +1662,7 @@ This non-uniform marginal return implies that a fixed-$T$ deployment strategy is
 \subsection{Cross-Architecture Detection Table}
 \label{app:cross_arch_table}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \small
 \caption{Cross-architecture PermG forward detection ($\alpha{=}1.0$, 15 model-seed combinations across five families---Pythia, GPT-2, OPT, Qwen, SmolLM3---and two domains; Padding-410M is a Pythia variant). PermG fwd $=$ count of FDR-significant forward pairs out of 8.}
@@ -1690,7 +1716,7 @@ Possible explanations include: (1)~GPT-2's attention patterns create feedback lo
 
 \paragraph{SmolLM3-3B: entropy decoupling.}
 SmolLM3-3B achieves only 3/8 detection, with all significant pairs involving ECE rather than entropy (entropy: 0/4; ECE: 3/4).
-This violates the cascade ordering assumption (Design Principle~\ref{thm:entropy_leads}): in 3/8 conditions, entropy does not monotonically decrease across generations, exhibiting a recovery pattern between gen-3 and gen-5 before resuming decline.
+This violates the cascade ordering assumption (Observation~\ref{thm:entropy_leads}): in 3/8 conditions, entropy does not monotonically decrease across generations, exhibiting a recovery pattern between gen-3 and gen-5 before resuming decline.
 The non-monotonic entropy trajectory breaks the mode amplification assumption underlying the cascade ordering, suggesting that SmolLM3's architecture (likely due to its different attention mechanism or training objective) produces qualitatively different collapse dynamics.
 
 \paragraph{Domain effects: WikiText vs.\ C4.}
@@ -1707,7 +1733,7 @@ Based on the cross-architecture results, we recommend:
 \item Verify monotonic entropy decline on the target architecture; non-monotonic cases (SmolLM3-3B) require ECE-based detection.
 \end{enumerate}
 
-\FloatBarrier
+
 \section*{Reproducibility Details}
 \label{app:reproducibility}
 
@@ -1726,7 +1752,7 @@ Several implementation decisions affect reproducibility:
 \item \emph{Checkpoint strategy}: each generation fine-tunes from the previous generation's checkpoint (not from pretrained $M_0$), implementing true iterative collapse rather than independent fine-tuning.
 \item \emph{Generation prompts}: the same 5{,}000 prompt set (sampled once per experiment) is used across all generations within a run, controlling for prompt-selection variance.
 \item \emph{Metric computation}: all metrics are computed on the same held-out set across generations; distinct-$n$ uses the full 5{,}000 generated samples (not a subsample).
-\item \emph{Pipeline versioning}: results in this paper use the d120 pipeline version, which corrected FPR calibration errors present in earlier versions (d103, d061). The d120 recompilation changed PermG detection at $\alpha{=}0.60$ from 3/8 (v3) to 0/8 (v4, reported).
+\item \emph{Pipeline versioning}: results in this paper use the current pipeline version, which corrected FPR calibration errors present in earlier iterations. The corrected pipeline changed PermG detection at $\alpha{=}0.60$ from 3/8 to 0/8 (reported).
 \end{itemize}
 
 \paragraph{Data availability.}
@@ -1734,13 +1760,7 @@ WikiText-103~\citep{merity2017pointer} is publicly available.
 Synthetic data generated during experiments is not released (too large), but the generation scripts are included in the code release.
 All statistical analysis code, including the five detection methods, MMCT consensus, and specification curve construction, will be released upon acceptance.
 
-\section*{Use of AI Assistants}
-\label{app:ai-assistants}
+\section*{Use of AI Assistance}
 
-We used Claude (Anthropic) as an AI coding and writing assistant throughout this work. Specifically:
-\begin{itemize}
-    \item \textbf{Code:} drafting experiment scripts, data-processing pipelines, and analysis utilities; debugging and refactoring.
-    \item \textbf{Writing:} drafting and revising paper sections, polishing prose, and reformatting LaTeX.
-    \item \textbf{Literature:} summarizing related papers to inform related-work section.
-\end{itemize}
+We used Claude for coding, code drafting, debugging, and language polishing.
 

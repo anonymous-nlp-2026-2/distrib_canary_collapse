@@ -15,7 +15,7 @@ saved checkpoints (requires GPU + intermediate checkpoints).
 
 Usage:
   python moment_cascade_analysis.py --mode metrics \
-      --data_dir ./results/alpha_sweep
+      --data_dir /root/autodl-tmp/distrib_canary_collapse/results/alpha_sweep
   python moment_cascade_analysis.py --mode metrics --data_dir ... --alpha 0.50
 """
 

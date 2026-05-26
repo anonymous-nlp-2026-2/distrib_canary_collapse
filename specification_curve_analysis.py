@@ -25,8 +25,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from collections import OrderedDict
 
-BASE_DIR = "./results/alpha_sweep"
-OUTPUT_DIR = "./results/spec_curve_analysis"
+BASE_DIR = "/root/autodl-tmp/distrib_canary_collapse/results/alpha_sweep"
+OUTPUT_DIR = "/root/autodl-tmp/distrib_canary_collapse/results/spec_curve_analysis"
 
 ALPHA_DIR_MAP = OrderedDict([
     (0.00, "a000_s42_fp32"),

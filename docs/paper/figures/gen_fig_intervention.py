@@ -48,8 +48,8 @@ threshold_ent = baseline_ent[0] * 0.85  # 2.749
 
 # ── Figure ──
 fig, (ax_ent, ax_ppl) = plt.subplots(
-    2, 1, figsize=(3.5, 4.2), sharex=True,
-    gridspec_kw={'height_ratios': [1, 1.15], 'hspace': 0.10}
+    1, 2, figsize=(7.0, 2.4),
+    gridspec_kw={'wspace': 0.32}
 )
 
 # ══════════════════════════════════════════════════════════════════
@@ -93,10 +93,12 @@ t_react = ax_ent.text(3.3, 2.48, 'gen 2', fontsize=6, color=C_REACTIVE,
 t_react.set_path_effects([pe.withStroke(linewidth=2.5, foreground='white')])
 
 ax_ent.set_ylabel('Token entropy')
+ax_ent.set_xlabel('Generation')
+ax_ent.set_xticks(gens)
 ax_ent.set_ylim(0.9, 3.5)
 ax_ent.legend(loc='center right', framealpha=0.92, edgecolor='none',
               handlelength=1.5, borderpad=0.3)
-ax_ent.text(-0.14, 1.02, '(a)', transform=ax_ent.transAxes,
+ax_ent.text(-0.15, 1.02, '(a)', transform=ax_ent.transAxes,
             fontsize=11, fontweight='bold', va='bottom')
 
 # ══════════════════════════════════════════════════════════════════
@@ -157,8 +159,10 @@ t_pv2.set_path_effects([pe.withStroke(linewidth=2.5, foreground='white')])
 
 ax_ppl.legend(loc='upper left', framealpha=0.92, edgecolor='none',
               handlelength=1.5, borderpad=0.3)
-ax_ppl.text(-0.14, 1.02, '(b)', transform=ax_ppl.transAxes,
+ax_ppl.text(-0.15, 1.02, '(b)', transform=ax_ppl.transAxes,
             fontsize=11, fontweight='bold', va='bottom')
+
+fig.subplots_adjust(left=0.07, right=0.97, top=0.94, bottom=0.17)
 
 # ── Save ──
 for fmt in ['pdf', 'png']:

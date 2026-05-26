@@ -139,7 +139,7 @@ def format_report(analyses):
 
 
 def main():
-    base = Path("./artifacts/universal_cascade")
+    base = Path("/home/ubuntu/.agent-ml-research-idea_gen_0514_4/projects/distrib_canary_collapse/artifacts/universal_cascade")
 
     analyses = []
 
